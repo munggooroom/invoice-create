@@ -1,6 +1,6 @@
 const xlsx = require('xlsx'); //엑셀 모듈 가져옴
 
-const excelFile = xlsx.readFile('src/common/펫도매.xlsx');
+const excelFile = xlsx.readFile('src/common/딱펫.xlsx');
 const sheetName = excelFile.SheetNames[0];
 const firstSheet = excelFile.Sheets[sheetName];
 const tempData = xlsx.utils.sheet_to_json(firstSheet, {defval: ''});
@@ -27,42 +27,30 @@ const jsonParser = (array) => {
             '배송메세지',
           ],
     ];
-    
-    //키값에 공백이 있어서 공백 제거 및 특수문자 제거
-    const jsonData = array.map(v => {
-        const newRecord = {};
-        for (const key in v) {
-            const newString = v[key]+"";
-            const isSize = newString.indexOf("사이즈선택")
-            newRecord[key.replace(/\s/g, "")] = v[key]; //공백 제거
-            newRecord[key.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi, "")] = v[key]; //특수문자 제거
-            if(isSize != -1) newRecord[key] = newRecord[key].replace("사이즈선택", `${v.옵션명1} ${v.옵션값1}`) //상품명의 사이즈선택을 옵션에있는 사이즈로 대체
-        }
-        console.log(newRecord)
-        return newRecord
-    })
-    
+
     //판매명부 작성
-    jsonData.map(v => {
+    array.map((v, i) => {
+        if(i !== 0) {
         const newList = [];
 
         newList.push('__AUTO__'); //주문번호
-        newList.push('2) '+v.상품명); //상품명
+        newList.push('딱) '+v.__EMPTY_3); //상품명
         newList.push(''); //옵션
-        newList.push(v.출고할수량); //수량
+        newList.push(v.__EMPTY_6); //수량
         newList.push(2500); //배송료
         newList.push('선결제'); //배송방법
-        newList.push(v.수령인); //주문자
-        newList.push(v.수령인연락처); //주문자전화
-        newList.push(v.수령인휴대폰); //주문자핸드폰
-        newList.push(v.수령인); //수령자
-        newList.push(v.수령인연락처); //전화
-        newList.push(v.수령인휴대폰); //핸드폰
-        newList.push(''); //우편번호
-        newList.push(v.전체주소지번 || v.전체주소도로명); //주소
-        newList.push(v.사용자메모); //배송메세지
+        newList.push(v.__EMPTY_1); //주문자
+        newList.push(v.__EMPTY_11 || v.__EMPTY_12); //주문자전화
+        newList.push(v.__EMPTY_12 || v.__EMPTY_11); //주문자핸드폰
+        newList.push(v.__EMPTY_1); //수령자
+        newList.push(v.__EMPTY_11 || v.__EMPTY_12); //전화
+        newList.push(v.__EMPTY_12 || v.__EMPTY_11); //핸드폰
+        newList.push(v.__EMPTY_9); //우편번호
+        newList.push(v.__EMPTY_10); //주소
+        newList.push(v.__EMPTY_14); //배송메세지
 
         sellList.push(newList)
+        }
     })
     return sellList
 }
@@ -93,7 +81,7 @@ orders['!cols'] = [
 ]
 
 //시트 생성
-xlsx.utils.book_append_sheet(list, orders, '펫도매송장');
+xlsx.utils.book_append_sheet(list, orders, '딱펫');
 
 //엑셀 파일 생성
-xlsx.writeFile(list, '펫도매송장.xlsx');
+xlsx.writeFile(list, '딱펫송장.xlsx');
