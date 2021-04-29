@@ -47,8 +47,12 @@ const jsonParser = (array) => {
         for (const key in v) {
             const newString = v[key]+"";
             const isSize = newString.indexOf("사이즈선택")
+            const isOption = newString.indexOf("옵션선택")
+            const isColor = newString.indexOf("색상선택")
             newRecord[key.replace(/\s/g, "")] = v[key]; //공백 제거
             if(isSize != -1) newRecord[key] = v[key].replace("사이즈선택", v.__EMPTY_7) //상품명의 사이즈선택을 옵션에있는 사이즈로 대체
+            if(isOption != -1) newRecord[key] = v[key].replace("옵션선택",  v.__EMPTY_7) //상품명의 옵션선택을 옵션에있는 옵션으로 대체
+            if(isColor != -1) newRecord[key] = v[key].replace("색상선택",  v.__EMPTY_7) //상품명의 색상선택을 옵션에있는 색상으로 대체
         }
         return newRecord
     })
