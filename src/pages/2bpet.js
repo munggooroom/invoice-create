@@ -7,7 +7,7 @@ const tempData = xlsx.utils.sheet_to_json(firstSheet, {defval: ''});
 const list = xlsx.utils.book_new();
 
 const jsonParser = (array) => {
-    //CJ송장양식
+    //CJ송장양식 //commit테스트
     const sellList = [
         [
             '주문번호',
