@@ -52,27 +52,27 @@ const jsonParser = (array) => {
         newList.push('') //마스터상품코드
         newList.push('') //상품코드
         newList.push('__AUTO__'); //주문번호
-        newList.push('매) '+v.__EMPTY_3); //상품명
+        newList.push('매) '+v.__EMPTY_1); //상품명
         newList.push(''); //옵션
-        newList.push(v.__EMPTY_6); //수량
+        newList.push(v.__EMPTY); //수량
         newList.push('') //판매가
         newList.push('') //공급가
         newList.push('') //원가
         newList.push('') //추가구매옵션
         newList.push(''); //배송료
         newList.push('선결제'); //배송방법
-        newList.push(v.__EMPTY_8); //주문자
-        newList.push(v.__EMPTY_11 || v.__EMPTY_12); //주문자전화
-        newList.push(v.__EMPTY_12 || v.__EMPTY_11); //주문자핸드폰
+        newList.push(v.__EMPTY_2); //주문자
+        newList.push(v.__EMPTY_3); //주문자전화
+        newList.push(v.__EMPTY_3); //주문자핸드폰
         newList.push('') //주문자이메일
-        newList.push(v.__EMPTY_8); //수령자
-        newList.push(v.__EMPTY_11 || v.__EMPTY_12); //전화
-        newList.push(v.__EMPTY_12 || v.__EMPTY_11); //핸드폰
+        newList.push(v.__EMPTY_2); //수령자
+        newList.push(v.__EMPTY_3); //전화
+        newList.push(v.__EMPTY_3); //핸드폰
         newList.push('') //수령자영문이름
         newList.push('') //수령자주민등록번호(통관용)
-        newList.push(v.__EMPTY_9); //우편번호
-        newList.push(v.__EMPTY_10); //주소
-        newList.push(v.__EMPTY_14); //배송메세지
+        newList.push(''); //우편번호
+        newList.push(v.__EMPTY_4); //주소
+        newList.push(v.__EMPTY_5); //배송메세지
         newList.push('') //배송사명
         newList.push('') //송장번호
         newList.push('') //사은품
@@ -125,7 +125,7 @@ orders['!cols'] = [
 ]
 
 //시트 생성
-xlsx.utils.book_append_sheet(list, orders, '딱펫');
+xlsx.utils.book_append_sheet(list, orders, '매직퍼피');
 
 //엑셀 파일 생성
-xlsx.writeFile(list, '딱펫송장.xlsx');
+xlsx.writeFile(list, '매직퍼피송장.xlsx');
