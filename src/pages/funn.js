@@ -1,6 +1,6 @@
 const xlsx = require('xlsx'); //엑셀 모듈 가져옴
 
-const excelFile = xlsx.readFile('src/common/투비펫.xlsx');
+const excelFile = xlsx.readFile('src/common/펀앤.xlsx');
 const sheetName = excelFile.SheetNames[0];
 const firstSheet = excelFile.Sheets[sheetName];
 const tempData = xlsx.utils.sheet_to_json(firstSheet, {defval: ''});
@@ -42,53 +42,36 @@ const jsonParser = (array) => {
           ],
     ];
 
-    const jsonData = array.map(v => {
-        const newRecord = {};
-        for (const key in v) {
-            const newString = v[key]+"";
-            const isSize = newString.indexOf("사이즈선택")
-            const isOption = newString.indexOf("옵션선택")
-            const isColor = newString.indexOf("색상선택")
-            const isShape = newString.indexOf("모양선택")
-            newRecord[key.replace(/\s/g, "")] = v[key]; //공백 제거
-            if(isSize != -1) newRecord[key] = v[key].replace("사이즈선택", v.__EMPTY_7) //상품명의 사이즈선택을 옵션에있는 사이즈로 대체
-            if(isOption != -1) newRecord[key] = v[key].replace("옵션선택",  v.__EMPTY_7) //상품명의 옵션선택을 옵션에있는 옵션으로 대체
-            if(isColor != -1) newRecord[key] = v[key].replace("색상선택",  v.__EMPTY_7) //상품명의 색상선택을 옵션에있는 색상으로 대체
-            if(isShape != -1) newRecord[key] = v[key].replace("모양선택",  v.__EMPTY_7) //상품명의 색상선택을 옵션에있는 색상으로 대체
-        }
-        return newRecord
-    })
-
     //판매명부 작성
-    jsonData.map((v, i) => {
-        if(i !== 0) {
+    array.map((v, i) => {
+        if(v.__EMPTY === "배송준비중") {
         const newList = [];
 
         newList.push('') //주문일
         newList.push('') //마스터상품코드
         newList.push('') //상품코드
         newList.push('__AUTO__'); //주문번호
-        newList.push('투) '+v.__EMPTY_6); //상품명
-        newList.push(''); //옵션
-        newList.push(v.__EMPTY_8); //수량
+        newList.push('펀) '+v.__EMPTY_8); //상품명
+        newList.push(v.__EMPTY_9); //옵션
+        newList.push(v.__EMPTY_10); //수량
         newList.push('') //판매가
         newList.push('') //공급가
         newList.push('') //원가
         newList.push('') //추가구매옵션
         newList.push(''); //배송료
         newList.push('선결제'); //배송방법
-        newList.push(v.__EMPTY_3); //주문자
-        newList.push(v.__EMPTY_4 || v.__EMPTY_5); //주문자전화
-        newList.push(v.__EMPTY_5 || v.__EMPTY_4); //주문자핸드폰
+        newList.push(v.__EMPTY_4); //주문자
+        newList.push(v.__EMPTY_5 || v.__EMPTY_6); //주문자전화
+        newList.push(v.__EMPTY_6 || v.__EMPTY_5); //주문자핸드폰
         newList.push('') //주문자이메일
-        newList.push(v.__EMPTY_3); //수령자
-        newList.push(v.__EMPTY_4 || v.__EMPTY_5); //전화
-        newList.push(v.__EMPTY_5 || v.__EMPTY_4); //핸드폰
+        newList.push(v.__EMPTY_4); //수령자
+        newList.push(v.__EMPTY_5 || v.__EMPTY_6); //전화
+        newList.push(v.__EMPTY_6 || v.__EMPTY_5); //핸드폰
         newList.push('') //수령자영문이름
         newList.push('') //수령자주민등록번호(통관용)
-        newList.push(v.__EMPTY_20); //우편번호
-        newList.push(v.__EMPTY_21); //주소
-        newList.push(v.__EMPTY_22); //배송메세지
+        newList.push(v.__EMPTY_16); //우편번호
+        newList.push(v.__EMPTY_17+v.__EMPTY_18); //주소
+        newList.push(''); //배송메세지
         newList.push('') //배송사명
         newList.push('') //송장번호
         newList.push('') //사은품
@@ -97,6 +80,7 @@ const jsonParser = (array) => {
         sellList.push(newList)
         }
     })
+    
     return sellList
 }
 
@@ -141,7 +125,7 @@ orders['!cols'] = [
 ]
 
 //시트 생성
-xlsx.utils.book_append_sheet(list, orders, '투비펫');
+xlsx.utils.book_append_sheet(list, orders, '펀앤');
 
 //엑셀 파일 생성
-xlsx.writeFile(list, '투비펫송장.xlsx');
+xlsx.writeFile(list, '펀앤송장.xlsx');
