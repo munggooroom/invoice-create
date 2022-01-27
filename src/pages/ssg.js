@@ -71,9 +71,9 @@ const jsonParser = (array) => {
         newList.push('') //추가구매옵션
         newList.push(''); //배송료
         newList.push('선결제'); //배송방법
-        newList.push(v.주문자); //주문자
-        newList.push(''); //주문자전화
-        newList.push(''); //주문자핸드폰
+        newList.push(v.주문자 || v.수취인); //주문자
+        newList.push(v.수취인전화번호 || v.수취인휴대전화번호); //주문자전화
+        newList.push(v.수취인휴대전화번호); //주문자핸드폰
         newList.push('') //주문자이메일
         newList.push(v.수취인); //수령자
         newList.push(v.수취인전화번호 || v.수취인휴대전화번호); //전화

@@ -1,6 +1,6 @@
 const xlsx = require('xlsx'); //엑셀 모듈 가져옴
 
-const excelFile = xlsx.readFile('src/common/홈앤쇼핑.xlsx');
+const excelFile = xlsx.readFile('src/common/롯데온.xlsx');
 const sheetName = excelFile.SheetNames[0];
 const firstSheet = excelFile.Sheets[sheetName];
 const tempData = xlsx.utils.sheet_to_json(firstSheet, {defval: ''});
@@ -62,27 +62,27 @@ const jsonParser = (array) => {
         newList.push('') //마스터상품코드
         newList.push('') //상품코드
         newList.push('__AUTO__'); //주문번호
-        newList.push('[홈앤쇼핑])'+v.상품명); //상품명
-        newList.push(v.속성상세); //옵션
-        newList.push(v.수량); //수량
+        newList.push('[롯데온])'+v.상품명); //상품명
+        newList.push(''); //옵션
+        newList.push(v.수량 || v.주문수량); //수량
         newList.push('') //판매가
         newList.push('') //공급가
         newList.push('') //원가
         newList.push('') //추가구매옵션
         newList.push(''); //배송료
         newList.push('선결제'); //배송방법
-        newList.push(v.인수자); //주문자
-        newList.push(v.전화1); //주문자전화
-        newList.push(v.전화2); //주문자핸드폰
+        newList.push(v.주문자명); //주문자
+        newList.push(v.주문자휴대폰번호 || v.수취인휴대폰번호); //주문자전화
+        newList.push(''); //주문자핸드폰
         newList.push('') //주문자이메일
-        newList.push(v.인수자); //수령자
-        newList.push(v.전화1); //전화
-        newList.push(v.전화2); //핸드폰
+        newList.push(v.수취인명); //수령자
+        newList.push(''); //전화
+        newList.push(v.수취인휴대폰번호 || v.주문자휴대폰번호); //핸드폰
         newList.push('') //수령자영문이름
         newList.push('') //수령자주민등록번호(통관용)
         newList.push(v.우편번호); //우편번호
-        newList.push(v.주소); //주소
-        newList.push(v.배송메시지); //배송메세지
+        newList.push(v.배송지); //주소
+        newList.push(''); //배송메세지
         newList.push('') //배송사명
         newList.push('') //송장번호
         newList.push('') //사은품
@@ -135,7 +135,7 @@ orders['!cols'] = [
 ]
 
 //시트 생성
-xlsx.utils.book_append_sheet(list, orders, '홈앤쇼핑송장');
+xlsx.utils.book_append_sheet(list, orders, '롯데온송장');
 
 //엑셀 파일 생성
-xlsx.writeFile(list, '홈앤쇼핑송장.xlsx');
+xlsx.writeFile(list, '롯데온송장.xlsx');
