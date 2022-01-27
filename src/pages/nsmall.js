@@ -135,7 +135,7 @@ orders['!cols'] = [
 ]
 
 //시트 생성
-xlsx.utils.book_append_sheet(list, orders, 'NS쇼핑몰송장');
+xlsx.utils.book_append_sheet(list, orders, 'NS홈쇼핑송장');
 
 //엑셀 파일 생성
-xlsx.writeFile(list, 'NS쇼핑몰송장.xlsx');
+xlsx.writeFile(list, 'NS홈쇼핑송장.xlsx');
